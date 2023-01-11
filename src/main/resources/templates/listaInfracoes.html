@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html xlmns="http://www.w3.org/1999/xhtml" xlmns:th="http://www.thymeleaf.org">
+
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>Lista de Infrações - Gabriel Ribeiro</title>
+	<link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+
+<body>
+	<div th:class="'alert alert-'+ ${tipo}" th:if="${!#strings.isEmpty(mensagem)}">
+		<span th:text="${mensagem}"></span>
+	
+	</div>
+	<div th:insert="~{Menu :: menu}"></div>
+	<div class="card">
+		<div class="card-header">
+			<h1 class="card-title">Lista de Infrações Cadastradas -
+				Gabriel Ribeiro</h1>
+		</div>
+		<form class="form-inline" style="margin: 20px 0" method="POST" th:object="${infracaoModel}"
+			th:action="@{/infracao}">
+			<div class="form-group">
+
+				Descrição: <input type="text" class="form-control" th:field="*{descricao}" />
+				&nbsp;
+				Ponto: <input type="text" class="form-control" th:field="*{ponto}" />
+				&nbsp;
+				Valor: <input type="text" class="form-control" th:field="*{valor}" />
+				<br>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+
+			</div>
+			</div>
+			</div>
+		</form>
+		<table class="table">
+
+			<thead>
+				<tr>
+
+					<th>id</th>
+					<th>Descrição</th>
+					<th>Pontos</th>
+					<th>Valor</th>
+					<th>Editar</th>
+					<th>Deletar</th>
+				</tr>
+
+			</thead>
+			<tbody>
+
+				<tr th:each="inf:${infracao}">
+
+					<td th:text="${inf.id}"></td>
+					<td th:text="${inf.descricao}">– </td>
+					<td th:text="${inf.ponto} + 'pts'"></td>
+					<td th:text="'R$ '+${inf.valor}"></td>
+					<td><a class="btn btn-primary" th:href="@{/infracao2/{id}(id=${inf.id})}">Editar</a></td>
+					<td><a class="btn btn-danger" onClick="confirm();" th:href="@{/infracao/deletar/{id}(id=${inf.id})}">Excluir</a></td>
+
+				</tr>
+				<!--
+  							<tr th:each="inf2:${infracaoBD}">
+  							
+  								<td th:text="${inf2.id}"></td>
+  								<td th:text="${inf2.descricao}"></td>
+  								<td th:text=${inf2.ponto}></td>
+  								<td th:text=${inf2.valor}></td>
+  								
+  						
+  							</tr>
+  						-->
+			</tbody>
+
+		</table>
+
+	</div>
+	</div>
+
+
+
+</body>
+
+
+</html>

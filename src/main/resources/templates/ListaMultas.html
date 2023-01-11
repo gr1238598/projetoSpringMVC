@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-widht" />
+	<link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+	<title>Lista de Multas</title>
+
+</head>
+
+<body>
+	<div th:insert="~{Menu	::	menu}"></div>
+	<div class="card" style="margin:	10px">
+		<div class="card-header">
+			<h1 class="card-title">
+				Lista de Multas Cadastradas - Gabriel Ribeiro de Almeida
+			</h1>
+		</div>
+		<div class="card-body"></div>
+		<form class="form-inline" method="POST" th:object="${multaModel}" th:action="@{/multas}" style="margin:	20px	0">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Placa" th:field="*{carro.placa}" />
+				&nbsp;
+				<input type="text" class="form-control" placeholder="Ano" th:field="*{ano}" />
+				&nbsp;
+				<input type="text" class="form-control" placeholder="Cidade" th:field="*{cidade}" />
+				&nbsp;
+				<select class="form-control" th:field="*{infracao.id}">
+					<option th:each="infracao :	${infracoes}" th:value="${infracao.id}" th:text="${infracao.descricao}">
+					</option>
+				</select>
+				&nbsp;
+				<button type="submit" class="btn btn-primary">Salvar
+				</button>
+			</div>
+		</form>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>PLACA DO CARRO</th>
+					<th>ANO</th>
+					<th>CIDADE</th>
+					<th>INFRAÇÃO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="multa	:	${multa}">
+					<td th:text="${multa.id}"></td>
+					<td th:text="${multa.carro.placa}"></td>
+					<td th:text="${multa.ano}"></td>
+					<td th:text="${multa.cidade}"></td>
+					<td th:text="${multa.infracao.descricao}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+</body>
+
+</html>
